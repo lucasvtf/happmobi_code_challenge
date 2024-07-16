@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import UserService from '../services/UserService';
 import IUser from '../interfaces/IUser';
-import { time } from 'console';
 
 export default class UserController {
   private req: Request;
@@ -19,8 +18,8 @@ export default class UserController {
   public async create() {
     const user: IUser = this.req.body;
     try {
-      const newCar = await this.service.create(user);
-      return this.res.status(201).json(newCar);
+      const newUser = await this.service.create(user);
+      return this.res.status(201).json(newUser);
     } catch (error) {
       this.next(error);
     }
