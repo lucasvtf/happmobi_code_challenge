@@ -15,6 +15,10 @@ export default class ModelExample<T> {
     return this.model.create(item);
   }
 
+  public async findAll(): Promise<T[]> {
+    return this.model.find();
+  }
+
   public async findOne(query: object): Promise<T | null> {
     return this.model.findOne(query);
   }
