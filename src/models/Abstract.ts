@@ -19,6 +19,10 @@ export default class ModelExample<T> {
     return this.model.find();
   }
 
+  public async find(query: object): Promise<T[]> {
+    return this.model.find(query);
+  }
+
   public async findOne(query: object): Promise<T | null> {
     return this.model.findOne(query);
   }
