@@ -1,14 +1,18 @@
 import VehicleModel from '../models/VehicleModel';
 import UserModel from '../models/UserModel';
+import ReservationHistoryModel from '../models/ReservationHistoryModel';
 import ApiErrors from '../utils/apiErros';
+import { Types } from 'mongoose';
 
 export default class ReservationService {
   private vehicleModel: VehicleModel;
   private userModel: UserModel;
+  private reservationHistoryModel: ReservationHistoryModel;
 
   constructor() {
     this.vehicleModel = new VehicleModel();
     this.userModel = new UserModel();
+    this.reservationHistoryModel = new ReservationHistoryModel();
   }
 
   async reserveVehicle(userId: string, vehicleId: string) {
@@ -25,6 +29,12 @@ export default class ReservationService {
 
     if (userReservations.length > 0)
       throw new ApiErrors('User already had a reservation.', 403);
+
+    await this.reservationHistoryModel.create({
+      userId: new Types.ObjectId(userId),
+      vehicleId: new Types.ObjectId(vehicleId),
+      reservationDate: new Date(),
+    });
 
     return this.vehicleModel.update(vehicleId, {
       reserved: true,
