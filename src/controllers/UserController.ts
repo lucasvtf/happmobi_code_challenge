@@ -26,10 +26,10 @@ export default class UserController {
   }
 
   public async update() {
-    const { id } = this.req.params;
+    const { userId } = this.req.params;
     const user: IUser = this.req.body;
     try {
-      const userUpdate = await this.service.update(id, user);
+      const userUpdate = await this.service.update(userId, user);
       return this.res.status(200).json(userUpdate);
     } catch (error) {
       this.next(error);
@@ -37,8 +37,8 @@ export default class UserController {
   }
 
   public async delete() {
-    const { id } = this.req.params;
-    const userDelete = await this.service.delete(id);
+    const { userId } = this.req.params;
+    const userDelete = await this.service.delete(userId);
     return this.res.status(200).json(userDelete);
   }
 
@@ -46,5 +46,11 @@ export default class UserController {
     const user = this.req.body;
     const token = await this.service.login(user);
     return this.res.status(201).json({ token });
+  }
+
+  public async reservationHistory() {
+    const { userId } = this.req.params;
+    const reservationHistory = await this.service.getReservationHistory(userId);
+    return this.res.status(200).json({ reservationHistory });
   }
 }

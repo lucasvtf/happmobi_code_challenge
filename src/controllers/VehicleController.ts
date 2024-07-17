@@ -26,10 +26,13 @@ export default class VehicleController {
   }
 
   public async updateVehicle() {
-    const { id } = this.req.params;
+    const { vehicleId } = this.req.params;
     const vehicle: IVehicle = this.req.body;
     try {
-      const vechileUpdate = await this.service.updateVehicle(id, vehicle);
+      const vechileUpdate = await this.service.updateVehicle(
+        vehicleId,
+        vehicle
+      );
       return this.res.status(200).json(vechileUpdate);
     } catch (error) {
       this.next(error);
@@ -37,8 +40,8 @@ export default class VehicleController {
   }
 
   public async deleteVehicle() {
-    const { id } = this.req.params;
-    const vehicleDelete = await this.service.deleteVehicle(id);
+    const { vehicleId } = this.req.params;
+    const vehicleDelete = await this.service.deleteVehicle(vehicleId);
     return this.res.status(200).json(vehicleDelete);
   }
 
