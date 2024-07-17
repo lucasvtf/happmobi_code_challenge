@@ -17,7 +17,7 @@ export const objectIdMiddleware = (
       return res.status(400).send({ error: 'Invalid id.' });
     }
 
-    next(); // Avançar para o próximo middleware ou rota
+    next();
   } catch (err) {
     res.status(400).send({ error: 'Invalid id.' });
   }
