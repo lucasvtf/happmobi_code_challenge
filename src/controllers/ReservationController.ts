@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import ReservationService from '../services/ReservationService';
+import { StatusCodes } from 'http-status-codes';
 
 export default class Reservationcontroller {
   private req: Request;
@@ -15,14 +16,26 @@ export default class Reservationcontroller {
   }
 
   async reserveVehicle() {
-    const { userId, vehicleId } = this.req.params;
-    await this.service.reserveVehicle(userId, vehicleId);
-    return this.res.status(200).json({ message: 'Successfully booked.' });
+    try {
+      const { userId, vehicleId } = this.req.params;
+      await this.service.reserveVehicle(userId, vehicleId);
+      return this.res
+        .status(StatusCodes.OK)
+        .json({ message: 'Successfully booked.' });
+    } catch (error) {
+      this.next(error);
+    }
   }
 
   async cleanReservation() {
-    const { vehicleId } = this.req.params;
-    await this.service.cleanReservation(vehicleId);
-    return this.res.status(200).json({ message: 'Successfully unbooked.' });
+    try {
+      const { vehicleId } = this.req.params;
+      await this.service.cleanReservation(vehicleId);
+      return this.res
+        .status(StatusCodes.OK)
+        .json({ message: 'Successfully unbooked.' });
+    } catch (error) {
+      this.next(error);
+    }
   }
 }

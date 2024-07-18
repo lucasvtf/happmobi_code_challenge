@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import VehicleService from '../services/VehicleService';
 import IVehicle from '../interfaces/IVehicle';
+import { StatusCodes } from 'http-status-codes';
 
 export default class VehicleController {
   private req: Request;
@@ -15,34 +16,35 @@ export default class VehicleController {
     this.service = new VehicleService();
   }
 
-  public async createVehicle() {
+  public async create() {
     const vehicle: IVehicle = this.req.body;
     try {
-      const newVehicle = await this.service.createVehicle(vehicle);
-      return this.res.status(201).json(newVehicle);
+      const newVehicle = await this.service.create(vehicle);
+      return this.res.status(StatusCodes.CREATED).json(newVehicle);
     } catch (error) {
       this.next(error);
     }
   }
 
-  public async updateVehicle() {
+  public async update() {
     const { vehicleId } = this.req.params;
     const vehicle: IVehicle = this.req.body;
     try {
-      const vechileUpdate = await this.service.updateVehicle(
-        vehicleId,
-        vehicle
-      );
-      return this.res.status(200).json(vechileUpdate);
+      const vechileUpdate = await this.service.update(vehicleId, vehicle);
+      return this.res.status(StatusCodes.OK).json(vechileUpdate);
     } catch (error) {
       this.next(error);
     }
   }
 
-  public async deleteVehicle() {
-    const { vehicleId } = this.req.params;
-    const vehicleDelete = await this.service.deleteVehicle(vehicleId);
-    return this.res.status(200).json(vehicleDelete);
+  public async delete() {
+    try {
+      const { vehicleId } = this.req.params;
+      await this.service.delete(vehicleId);
+      return this.res.status(StatusCodes.NO_CONTENT);
+    } catch (error) {
+      this.next(error);
+    }
   }
 
   public async getAllVehicles() {

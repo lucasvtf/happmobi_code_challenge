@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import UserService from '../services/UserService';
 import IUser from '../interfaces/IUser';
+import { StatusCodes } from 'http-status-codes';
 
 export default class UserController {
   private req: Request;
@@ -16,41 +17,55 @@ export default class UserController {
   }
 
   public async create() {
-    const user: IUser = this.req.body;
     try {
+      const user: IUser = this.req.body;
       const newUser = await this.service.create(user);
-      return this.res.status(201).json(newUser);
+      return this.res.status(StatusCodes.CREATED).json(newUser);
     } catch (error) {
       this.next(error);
     }
   }
 
   public async update() {
-    const { userId } = this.req.params;
-    const user: IUser = this.req.body;
     try {
+      const { userId } = this.req.params;
+      const user: IUser = this.req.body;
       const userUpdate = await this.service.update(userId, user);
-      return this.res.status(200).json(userUpdate);
+      return this.res.status(StatusCodes.OK).json(userUpdate);
     } catch (error) {
       this.next(error);
     }
   }
 
   public async delete() {
-    const { userId } = this.req.params;
-    const userDelete = await this.service.delete(userId);
-    return this.res.status(200).json(userDelete);
+    try {
+      const { userId } = this.req.params;
+      await this.service.delete(userId);
+      return this.res.status(StatusCodes.NO_CONTENT);
+    } catch (error) {
+      this.next(error);
+    }
   }
 
   public async login() {
-    const user = this.req.body;
-    const token = await this.service.login(user);
-    return this.res.status(201).json({ token });
+    try {
+      const user = this.req.body;
+      const token = await this.service.login(user);
+      return this.res.status(StatusCodes.ACCEPTED).json({ token });
+    } catch (error) {
+      this.next(error);
+    }
   }
 
   public async reservationHistory() {
-    const { userId } = this.req.params;
-    const reservationHistory = await this.service.getReservationHistory(userId);
-    return this.res.status(200).json({ reservationHistory });
+    try {
+      const { userId } = this.req.params;
+      const reservationHistory = await this.service.getReservationHistory(
+        userId
+      );
+      return this.res.status(StatusCodes.OK).json({ reservationHistory });
+    } catch (error) {
+      this.next(error);
+    }
   }
 }
