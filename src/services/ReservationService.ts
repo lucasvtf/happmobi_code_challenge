@@ -15,7 +15,7 @@ export default class ReservationService {
     this.reservationHistoryModel = new ReservationHistoryModel();
   }
 
-  async reserveVehicle(userId: string, vehicleId: string) {
+  async reserveVehicle(userId: string, vehicleId: string): Promise<void> {
     const vehicleExists = await this.vehicleModel.findById(vehicleId);
     if (!vehicleExists) throw new ApiErrors('Vehicle not found', 404);
 
@@ -42,7 +42,7 @@ export default class ReservationService {
     });
   }
 
-  async cleanReservation(vehicleId: string) {
+  async cleanReservation(vehicleId: string): Promise<void> {
     const vehicleExists = await this.vehicleModel.findById(vehicleId);
     if (!vehicleExists) throw new ApiErrors('Vehicle not found', 404);
 
