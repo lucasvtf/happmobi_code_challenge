@@ -2,10 +2,12 @@ import { Router } from 'express';
 import UserController from '../controllers/UserController';
 import { authMiddleware } from '../middlewares/authMiddleware';
 import { objectIdMiddleware } from '../middlewares/objectIdMiddleware';
+import { createUserMiddleware } from '../middlewares/createUserMiddleware';
+import { loginMiddleware } from '../middlewares/loginMiddlware';
 
 const userRoutes = Router();
 
-userRoutes.post('/user', (req, res, next) =>
+userRoutes.post('/user', createUserMiddleware, (req, res, next) =>
   new UserController(req, res, next).create()
 );
 
@@ -23,7 +25,7 @@ userRoutes.delete(
   (req, res, next) => new UserController(req, res, next).delete()
 );
 
-userRoutes.post('/user/login', (req, res, next) =>
+userRoutes.post('/user/login', loginMiddleware, (req, res, next) =>
   new UserController(req, res, next).login()
 );
 
