@@ -11,21 +11,8 @@
     "forceConsistentCasingInFileNames": true,
     "useDefineForClassFields": true,
     "skipLibCheck": true,
-    "baseUrl": ".",
-    "paths": {
-      "$app": ["./src/app.js"],
-      "$models/": ["./src/models/"],
-      "$test/": ["./_tests_/"],
-      "$errors/": ["./src/errors/"],
-      "$shared/": ["./src/shared/"],
-      "$modules/": ["./src/modules/"],
-    }
+    "baseUrl": "."
   },
-  "include": [
-    "src/*/",
-    "_tests_"
-  ],
-  "exclude": [
-    "dist"
-  ]
+  "include": ["src/**/*", "__tests__"],
+  "exclude": ["dist"]
 }
