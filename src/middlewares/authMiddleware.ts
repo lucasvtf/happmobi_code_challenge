@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { verifyToken } from '../utils/jwt';
+import { StatusCodes } from 'http-status-codes';
 
 export const authMiddleware = (
   req: Request,
@@ -8,13 +9,15 @@ export const authMiddleware = (
 ) => {
   const token = req.header('Authorization');
   if (!token) {
-    return res.status(401).send({ error: 'Access denied. No token provided.' });
+    return res
+      .status(StatusCodes.UNAUTHORIZED)
+      .send({ error: 'Access denied. No token provided.' });
   }
 
   try {
     verifyToken(token);
     next();
   } catch (err) {
-    res.status(400).send({ error: 'Invalid token.' });
+    res.status(StatusCodes.BAD_REQUEST).send({ error: 'Invalid token.' });
   }
 };
