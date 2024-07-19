@@ -1,12 +1,21 @@
 export const userSchema = {
   type: 'object',
   properties: {
-    id: { type: 'string' },
     name: { type: 'string' },
     email: { type: 'string' },
     password: { type: 'string' },
   },
   required: ['name', 'email', 'password'],
+};
+
+export const userSchemaResponse = {
+  type: 'object',
+  properties: {
+    id: { type: 'string' },
+    name: { type: 'string' },
+    email: { type: 'string' },
+  },
+  required: ['id', 'name', 'email'],
 };
 
 export const userUpdateSchema = {

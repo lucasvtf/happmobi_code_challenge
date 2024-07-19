@@ -1,5 +1,6 @@
 import {
   userSchema,
+  userSchemaResponse,
   userUpdateSchema,
   loginSchema,
   reservationHistorySchema,
@@ -25,7 +26,7 @@ const userPaths = {
           description: 'User created successfully',
           content: {
             'application/json': {
-              schema: userSchema,
+              schema: userSchemaResponse,
             },
           },
         },
