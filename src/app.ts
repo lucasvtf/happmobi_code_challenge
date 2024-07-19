@@ -7,8 +7,12 @@ import userRoutes from './routers/UserRoutes';
 import vehicleRoutes from './routers/VehicleRoutes';
 import reservationRoutes from './routers/ReservationRoutes';
 import errorMiddleware from './middlewares/errorMiddleware';
+import swaggerUi from 'swagger-ui-express';
+import config from './docs/swaggerConfig';
 
 const app = express();
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(config));
 
 app.use(express.json());
 
