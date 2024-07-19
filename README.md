@@ -31,7 +31,13 @@ git clone git@github.com:lucasvtf/happmobi_code_challenge.git
 cd happmobi_code_challenge
 ```
 
-### Rodando o projeto com Docker.
+### Instalando as dependências
+
+```bash
+npm install
+```
+
+### Rodando o projeto com Docker
 
 ```bash
 docker-compose up --build
